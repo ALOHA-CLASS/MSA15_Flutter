@@ -1,7 +1,7 @@
 void main(List<String> args) {
   // 변수 선언
   int age = 20;
-  String name = "고건우";
+  String name = "김조은";
 
   // $변수명 : 문자열 내의 변수값을 지정
   print("age : $age");

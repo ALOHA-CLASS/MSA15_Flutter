@@ -9,7 +9,7 @@ Future<String> fetchData() {
 void fetchDataAwait() async {
   // await : Future 가 완료될 때까지 기다림
   String result = await fetchData();
-  print(result);
+  print(result + '2');
 }
 
 void main(List<String> args) {

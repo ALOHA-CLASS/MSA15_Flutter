@@ -5,6 +5,6 @@ void main(List<String> args) {
   print("add() 호출 결과 : ${add(10, 20)}");
 
   List<int> list = [1, 2, 3, 4, 5];
-  List<int> newList = list.map((item) => item * 2).toList();
+  List<int> newList = list.map( (item) => item * 2 ).toList();
   print("newList : $newList");
 }
