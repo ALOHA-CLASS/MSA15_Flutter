@@ -1,6 +1,7 @@
 // ⚡ stfl
 import 'package:flutter/material.dart';
 import 'package:layout_widget/models/product.dart';
+import 'package:layout_widget/screens/detail_screen.dart';
 
 class ListviewScreen extends StatefulWidget {
   const ListviewScreen({super.key});
@@ -60,6 +61,39 @@ class _ListviewScreenState extends State<ListviewScreen> {
                   trailing: const Icon(Icons.arrow_forward),
                   onTap: () {
                     print('아이템 클릭');
+                    AlertDialog dialog = AlertDialog(
+                      content: Text(
+                        "상품명 : ${product.title}",
+                        style: TextStyle(fontSize: 20.0),
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            // AlertDialog 를 스크린에서 제거
+                            // Navigator.of(context).pop();
+                            // 상세 화면으로 이동
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //     builder: (context) => DetailScreen(product: product)                                  
+                            //   )
+                            // );
+                            // 현재 최상위 스크린(Alert)을 새 스크린(상세)으로 대체
+                            Navigator.pushReplacement(
+                              context, 
+                              MaterialPageRoute(
+                                builder: (context) => DetailScreen(product: product)                                  
+                              )
+                            );
+                          }, 
+                          child: const Text("확인")
+                        )
+                      ],
+                    );
+                    showDialog(
+                      context: context, 
+                      builder: (BuildContext context) => dialog                           
+                    );
                   },
                 );
               }
