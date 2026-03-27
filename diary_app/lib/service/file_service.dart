@@ -52,5 +52,64 @@ class FileService {
     await file.writeAsString(_serialize(title, content));
   }
 
+  // 파일에서 제목 추출
+  String parseTitleFromRaw(String raw) {
+    final idx = raw.indexOf('\n$_seperator\n');
+    if( idx == -1 ) return '';
+    return raw.substring(0, idx);
+  }
+  // 파일에서 내용 추출
+  String parseContentFromRaw(String raw) {
+    final idx = raw.indexOf('\n$_seperator\n');
+    if( idx == -1 ) return raw;
+    return raw.substring(idx + _seperator.length);
+  }
+
+  // 파일명에서 날짜 추출
+  String getDateFromPath(String path) {
+    final name = 
+      path.split(Platform.pathSeparator).last.replaceAll('.txt', '');
+    return name.contains('_') ? name.split('_').first : name;
+  }
+
+  // 파일명에서 시간 추출
+  String getTimeFromPath(String path) {
+    final name =
+      path.split(Platform.pathSeparator).last.replaceAll('.txt', '');
+    if(!name.contains('_')) return '';
+    final t = name.split("_").last;   // 165238
+    if( t.length < 6 ) return '';
+    return '${t.substring(0,2)}:${t.substring(2,4)}:${t.substring(4,6)}';
+  }
+
+
+  // 일기 목록 가져오기
+  Future<List<DiaryEntry>> getDiaryEntries() async {
+    final dirPath = await getDirPath();
+    final dir = Directory(dirPath);
+    // 저장 경로의 있는 모든 파일
+    final all = dir.listSync();  
+    // 저장 경로의 .txt 파일만 추출   
+    final txts = all.where((e) => e.path.endsWith('.txt')).toList();
+    // 정렬 : 날짜순으로 내림차순 (최신순)
+    txts.sort((a, b) => b.path.compareTo(a.path));
+    
+    // .txt 리스트 ➡ List<DiaryEntry>
+    final entries = <DiaryEntry>[];
+    for (final f in txts) {
+      String title = '';
+      try {
+        final raw = await File(f.path).readAsString();  // 텍스트파일 내용
+        title = parseTitleFromRaw(raw);   // 제목 추출
+      } catch (_) { }
+      entries.add(DiaryEntry(
+        path: f.path, 
+        date: getDateFromPath(f.path), 
+        time: getTimeFromPath(f.path), 
+        title: title)
+      );
+    }
+    return entries;
+  }
 
 }

@@ -10,26 +10,49 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  List<DiaryEntry> _diaryList = [
-    DiaryEntry(
-      path: '/storage/2026-03-27_1120.txt', 
-      date: '2026-03-27', 
-      time: '11:20', 
-      title: '다이어리 앱 만들었따!'
-    ),
-    DiaryEntry(
-      path: '/storage/2026-03-26_1120.txt', 
-      date: '2026-03-26', 
-      time: '11:20', 
-      title: '플러터 라이브러리 연습'
-    ),
-    DiaryEntry(
-      path: '/storage/2026-03-25_1120.txt', 
-      date: '2026-03-25', 
-      time: '11:20', 
-      title: '월급날!!!'
-    ),
-  ];
+  // 🧊 state
+  List<DiaryEntry> _diaryList = [];
+
+  // 파일
+  final FileService _fileService = FileService();
+
+  @override
+  void initState() {
+    super.initState();
+    _loadDiaries();
+  }
+
+  // 일기 목록 불러오기
+  Future<void> _loadDiaries() async {
+    final list = await _fileService.getDiaryEntries();
+    if( mounted ) {
+      setState(() {
+        _diaryList = list;
+      });
+    }
+  }
+
+  // 샘플 일기 목록
+  // List<DiaryEntry> _diaryList = [
+  //   DiaryEntry(
+  //     path: '/storage/2026-03-27_1120.txt', 
+  //     date: '2026-03-27', 
+  //     time: '11:20', 
+  //     title: '다이어리 앱 만들었따!'
+  //   ),
+  //   DiaryEntry(
+  //     path: '/storage/2026-03-26_1120.txt', 
+  //     date: '2026-03-26', 
+  //     time: '11:20', 
+  //     title: '플러터 라이브러리 연습'
+  //   ),
+  //   DiaryEntry(
+  //     path: '/storage/2026-03-25_1120.txt', 
+  //     date: '2026-03-25', 
+  //     time: '11:20', 
+  //     title: '월급날!!!'
+  //   ),
+  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -65,8 +88,10 @@ class _HomePageState extends State<HomePage> {
   // ----- [FloatingActionButton] -----
   FloatingActionButton _buildFloatingActionButton() {
     return FloatingActionButton(
-      onPressed: () {
-        Navigator.pushNamed(context, "/write");
+      onPressed: () async {
+        await Navigator.pushNamed(context, "/write");
+        // 목록 -> 작성 (작성 완료 다음, pop이 되면 목록 갱신)
+        _loadDiaries();
       },
       backgroundColor: Colors.amber,
       foregroundColor: Colors.black,
@@ -168,9 +193,11 @@ class _HomePageState extends State<HomePage> {
           ListTile(
             leading: const Icon(Icons.edit_note),
             title: const Text("새 일기 쓰기"),
-            onTap: () {
+            onTap: () async {
               Navigator.pop(context);     // Drawer 제거
-              Navigator.pushNamed(context, "/write");
+              await Navigator.pushNamed(context, "/write");
+              // 목록 -> 작성 (작성 완료 다음, pop이 되면 목록 갱신)
+              _loadDiaries();
             },
           ),
         ],
