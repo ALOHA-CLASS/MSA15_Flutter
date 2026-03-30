@@ -9,9 +9,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  path_provider: ^2.0.0
   calendar_date_picker2: ^2.0.1
   table_calendar: ^3.2.0
+  path_provider: ^2.1.5
 
 dev_dependencies:
   flutter_test:
