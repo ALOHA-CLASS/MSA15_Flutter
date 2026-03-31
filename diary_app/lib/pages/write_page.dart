@@ -103,7 +103,9 @@ class _WritePageState extends State<WritePage> {
       ),
       bottomSheet: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
+          // ⚡ System Navigation Bar [ |||  ㅁ  < ] 위로 BottomSheet 버튼 겹치는 문제 해결
+          // padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
+          padding: EdgeInsets.fromLTRB(16, 8, 16,MediaQuery.of(context).padding.bottom + 12, ),
           child: SizedBox(
             width: double.infinity,
             height: 52,
@@ -136,7 +138,9 @@ class _WritePageState extends State<WritePage> {
         )
       ),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 16, 16, 80),
+        // ⚡ System Navigation Bar [ |||  ㅁ  < ] 위로 BottomSheet 버튼 겹치는 문제 해결
+        // padding: const EdgeInsets.fromLTRB(16, 16, 16, 80),
+        padding: EdgeInsets.fromLTRB(16, 16, 16, 80 + MediaQuery.of(context).padding.bottom,),
         child: Column(
           children: [
             InkWell(

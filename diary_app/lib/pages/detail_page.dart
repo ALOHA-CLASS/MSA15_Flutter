@@ -185,7 +185,9 @@ class _DetailPageState extends State<DetailPage> {
       ),
       bottomSheet: !_isEditing ? null : SafeArea(
         child: Padding(
-          padding: EdgeInsetsGeometry.fromLTRB(16, 8, 16, 12),
+          // ⚡ System Navigation Bar [ |||  ㅁ  < ] 위로 BottomSheet 버튼 겹치는 문제 해결
+          // padding: EdgeInsets.fromLTRB(16, 8, 16, 12),
+          padding: EdgeInsets.fromLTRB(16, 8, 16,MediaQuery.of(context).padding.bottom + 12, ),
           child: SizedBox(
             width: double.infinity,
             height: 52,
@@ -226,7 +228,10 @@ class _DetailPageState extends State<DetailPage> {
           Center(child: CircularProgressIndicator(color: Colors.amber,),)
         : _isEditing
         ? // 수정 모드
-        Padding(padding: EdgeInsetsGeometry.fromLTRB(16, 16, 16, 80),
+        Padding(
+          // ⚡ System Navigation Bar [ |||  ㅁ  < ] 위로 BottomSheet 버튼 겹치는 문제 해결
+          // padding: EdgeInsetsGeometry.fromLTRB(16, 16, 16, 80),
+          padding: EdgeInsets.fromLTRB(16, 16, 16, 80 + MediaQuery.of(context).padding.bottom,),
           child: Column(
             children: [
               // 날짜 선택
