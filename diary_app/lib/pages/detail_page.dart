@@ -159,7 +159,7 @@ class _DetailPageState extends State<DetailPage> {
               style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
             ),
             Text(
-              '${ date } / ${ time }',
+              '$date / $time ',
               style: TextStyle(fontSize: 11, color: Colors.black54),
             )
           ],

@@ -278,7 +278,6 @@ class _HomePageState extends State<HomePage> {
       itemBuilder: (context, index) {
         final entry = _filteredList[index];
         final date = entry.date;
-        final time = entry.time;
 
         return Dismissible(
           key: Key(entry.path), 
@@ -405,7 +404,6 @@ class _HomePageState extends State<HomePage> {
             itemCount: _filteredList.length,
             itemBuilder: (context, index) {
               final entry = _filteredList[index];
-              final date = entry.date;
               final isSelected = _selectedPaths.contains(entry.path);
 
               return Card(
