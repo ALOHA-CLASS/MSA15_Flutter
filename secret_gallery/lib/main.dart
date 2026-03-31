@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'pages/lock_page.dart';
-
 void main() {
   runApp(const MainApp());
 }
@@ -11,11 +9,12 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: '시크릿 갤러리',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark(),
-      home: const LockPage(),
+    return const MaterialApp(
+      home: Scaffold(
+        body: Center(
+          child: Text('Hello World!'),
+        ),
+      ),
     );
   }
 }
